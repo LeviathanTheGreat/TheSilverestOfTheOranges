@@ -1,25 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
+
 
 import './App.css';
+import RepoTable from './components/RepoTable/RepoTable';
+import { Repo } from './lib/types/Repo';
+import { getRepos } from './lib/data-fetching';
 
 export function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [repos, setRepos] = useState<Repo[]>([])
+    useEffect(() => {
+        getRepos()
+            .then((fetchedRepos: Repo[]) => {
+                setRepos(fetchedRepos)
+            })
+            .catch(err => {
+                // we'll error handle gracefully later
+            })
+    })
+
+    return (
+        <div className="App">
+            <h1>dsfsfsdfs</h1>
+            <RepoTable repos={repos}></RepoTable>
+        </div>
+    );
 }
