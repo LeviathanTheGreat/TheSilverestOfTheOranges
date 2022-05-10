@@ -7,11 +7,21 @@ function getLocalRepos(): Repo[] {
     return localRepoData
 }
 
+
+export function getNonForkedRepos(repos: Repo[]) {
+    const nonForkedRepos = []
+    for (let repo of repos) {
+        if (repo.fork === false)
+            nonForkedRepos.push(repo)
+    }
+    return nonForkedRepos
+}
 function getGithubRepos(): Promise<Repo[]> {
 
     return axios.get('https://api.github.com/users/silverorange/repos')
         .then((res) => {
-            return res.data as Repo[]
+            const repos = res.data as Repo[]
+            return repos
         })
         .catch((error) => {
             console.error(new ReferenceError('failed to fetch repos from github'))
@@ -35,5 +45,8 @@ export async function getAllRepos(): Promise< Repo[] | TypeError > {
     if (!validationRes)
         return new TypeError('an error occured while processing')
 
-    return aggregatedRepoData
+    // filtering 
+    const filteredRepos = getNonForkedRepos(aggregatedRepoData)  
+
+    return filteredRepos
 }
