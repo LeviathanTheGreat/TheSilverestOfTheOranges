@@ -23,22 +23,29 @@ function getGithubRepos(): Promise<Repo[]> {
             const repos = res.data as Repo[]
             return repos
         })
-        .catch((error) => {
-            console.error(new ReferenceError('failed to fetch repos from github'))
-            return new Array<Repo>()
+        .catch((err) => {
+            const error = new ReferenceError('failed to fetch repos from github')
+            console.error(error)
+            throw error
         })
 
    
 }
 
 
-export async function getAllRepos(): Promise< Repo[] | TypeError > {
+export async function getAllRepos(): Promise< Repo[] | Error > {
 
-    // conbine the results of the two data sources
-    const aggregatedRepoData = [
-        ...getLocalRepos(),
-        ...(await getGithubRepos()),
-    ]
+    // combine the results of the two data sources
+    let aggregatedRepoData: Repo[] = []
+    try {
+        aggregatedRepoData = [
+            ...getLocalRepos(),
+            ...(await getGithubRepos()),
+        ]
+    } catch (err: unknown) {
+        return err as Error
+    }
+    
 
     // data validation
     const validationRes = areValidRepos(aggregatedRepoData)
