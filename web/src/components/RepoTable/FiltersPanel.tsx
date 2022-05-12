@@ -4,14 +4,14 @@ import FiltersButton from './FiltersButton'
 interface Props {
     languageFilterOptions: string[]
     records: LanguageFilterable[]
-    setRecords: Dispatch<SetStateAction<any[]>>
+    setRecords: Function
     className?: string
 }
 
 const FiltersPanel: FC<Props> = (props) => {
     const { languageFilterOptions, records, setRecords, className } = props
 
-    const filterLanguage = (language: string | null, records: LanguageFilterable[], stateSetter: Dispatch<SetStateAction<any[]>>) => {
+    const filterLanguage = (language: string | null, records: LanguageFilterable[], stateSetter: Function) => {
         if (language === "all") {
             stateSetter(records)
             return
@@ -21,11 +21,11 @@ const FiltersPanel: FC<Props> = (props) => {
         stateSetter(filtered)
     }
 
-
+    console.log("records: ", records)
     // 
     const [buttonPressedName, setButtonPressedName] = useState<string | null>(null)
     console.log("buttonPressedName: ", buttonPressedName)
-
+    
 
     return (
         <div className={`w-full flex items-center ${className}`}>
@@ -36,11 +36,16 @@ const FiltersPanel: FC<Props> = (props) => {
                     <FiltersButton
                         isPressed={buttonPressedName === languageName}
                         onClick={(e) => {
-                            setButtonPressedName(buttonPressedName !== languageName ? languageName : null)
-                            if (buttonPressedName === null)
-                                filterLanguage('all', records, setRecords)
-                            else
-                                filterLanguage(buttonPressedName, records, setRecords)
+                            setButtonPressedName((oldValue: string | null) => {
+                                // updates repos array with filtered results
+                                if (oldValue === languageName)
+                                    filterLanguage('all', records, setRecords)
+                                else
+                                    filterLanguage(languageName, records, setRecords)
+                                // the part that actually does some state setting 
+                                return oldValue !== languageName ? languageName : null
+                            })
+
                         }} >
                         {languageName}
                     </FiltersButton>

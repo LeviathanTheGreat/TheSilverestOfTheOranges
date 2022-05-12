@@ -26,7 +26,7 @@ function getGithubRepos(): Promise<Repo[]> {
         .catch((err) => {
             const error = new ReferenceError('failed to fetch repos from github')
             console.error(error)
-            throw error
+            return []
         })
 
    
@@ -43,7 +43,8 @@ export async function getAllRepos(): Promise< Repo[] | Error > {
             ...(await getGithubRepos()),
         ]
     } catch (err: unknown) {
-        return err as Error
+        aggregatedRepoData = getLocalRepos()
+        // return err as Error
     }
     
 

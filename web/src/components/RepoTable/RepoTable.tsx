@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import type { Repo } from '../../lib/types/Repo'
 import { Link, useNavigate } from "react-router-dom"
 import FiltersPanel from './FiltersPanel'
@@ -13,8 +13,12 @@ const RepoTable: FC<Props> = (props) => {
     
     const navigate = useNavigate()
     
-    const [currentRepos, setCurrentRepos] = useState<Repo[]>(repos)
+    
+    console.log('repos: ', repos)
+    const [currentRepos, setCurrentRepos] = useState<Repo[]>( [] )
+  
     const repoLanguages = getRepoLanguages(repos)
+    
     return (
         <div>
             <FiltersPanel
@@ -64,8 +68,16 @@ const RepoTable: FC<Props> = (props) => {
                                 </td>
                             </tr>
                         ))}
+                        
                     </tbody>
+                    
                 </table>
+                {repos.length === 0 ? (
+                            <div role="status" className='w-full px-4 py-2 border border-red-700 bg-white rounded-md shadow-inner shadow-red-400'>
+                                <p>Looks Like Something went wrong while loading the page😭</p>
+                                <p>Try reloading the page.</p>
+                            </div>
+                        ): null}
             </div>
         </div>
 

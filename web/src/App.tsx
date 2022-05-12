@@ -11,7 +11,7 @@ import RepoDetailsPage from './components/RepoDetailsPage/RepoDetailsPage';
 
 export function App() {
     const [repos, setRepos] = useState<Repo[]>([])
-    let fetchError = undefined
+    let fetchError: Error | undefined = undefined
     useEffect(() => {
         getRepos()
             .then((fetchedRepos: Repo[]) => {
@@ -21,14 +21,14 @@ export function App() {
                 fetchError = err
                 setRepos([])
             })
-    })
+        console.error(fetchError)
+    }, [])
 
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<IndexPage fetchError={fetchError} repos={repos} />}>
-                    <Route path="details/:id" element={<RepoDetailsPage repos={repos} />} />
-                </Route>
+                <Route path="/" element={<IndexPage fetchError={fetchError} repos={repos} />} />
+                <Route path="/repo/:id" element={<RepoDetailsPage repos={repos} />} />
             </Routes>
         </BrowserRouter>
     );
