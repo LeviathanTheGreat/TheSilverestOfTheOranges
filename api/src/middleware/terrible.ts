@@ -2,8 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import { AppError } from '../models/AppError';
 
 export function terrible(
-    failureRate = 0.00, 
-    // failureRate = 0.25,
+     
+    failureRate = 0.25,
   minimumDelayMs = 100,
   maximumDelayMs = 600
 ) {

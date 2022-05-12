@@ -6,8 +6,7 @@ import { AppError } from './models/AppError';
 
 // CORS header configuration
 const corsOptions = {
-//   methods: 'GET',
-//   allowedHeaders: 'Content-Type, Authorization',
+  methods: 'GET',
 };
 
 export const app = express();

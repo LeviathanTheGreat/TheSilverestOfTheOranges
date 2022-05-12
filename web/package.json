@@ -38,12 +38,12 @@
     "tailwindcss": "^3.0.24"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint 'src/**/*.{js,ts,jsx,tsx}'",
-    "prettier": "prettier --list-different 'src/**/*.{scss,css,js,ts,jsx,tsx}'",
-    "prettier-write": "prettier --write 'src/**/*.{scss,css,js,ts,jsx,tsx}'"
+    "lint": "eslint src/**/*.{js,ts,jsx,tsx}",
+    "prettier": "prettier --list-different src/**/*.{scss,css,js,ts,jsx,tsx}",
+    "prettier-write": "prettier --write src/**/*.{scss,css,js,ts,jsx,tsx}"
   }
 }
