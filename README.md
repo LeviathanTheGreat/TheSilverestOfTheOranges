@@ -1,4 +1,4 @@
-silverorange Intermediate Developer Assessment 🥈🍊 
+Silverorange Intermediate Developer Assessment 🥈🍊 
 ==============================================
 
 This exercise is designed to assess how you approach tasks required in your
